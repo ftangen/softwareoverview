@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SoftwareCatalog {
+  id            Int            @id @default(autoincrement())
+  name          String         @unique
+  vendor        String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  installations Installation[]
+}
+
+model Project {
+  id            Int            @id @default(autoincrement())
+  projectNumber String         @unique
+  projectName   String
+  customer      String?
+  notes         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  installations Installation[]
+}
+
+model Installation {
+  id           Int             @id @default(autoincrement())
+  projectId    Int
+  softwareId   Int?
+  softwareName String
+  version      String
+  licenseType  LicenseType     @default(COMMERCIAL)
+  endOfSupport DateTime?
+  endOfLife    DateTime?
+  notes        String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  project  Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  software SoftwareCatalog? @relation(fields: [softwareId], references: [id])
+
+  @@index([projectId])
+  @@index([softwareId])
+}
+
+enum LicenseType {
+  COMMERCIAL
+  OPEN_SOURCE
+  NONE
+}
