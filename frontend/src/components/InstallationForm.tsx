@@ -38,7 +38,7 @@ export default function InstallationForm({ projectId, installation, onClose, onS
   const { data: suggestions } = useQuery({
     queryKey: ['software-suggest', softwareName],
     queryFn: () => api.getSoftware(softwareName),
-    enabled: softwareName.length > 1 && !softwareId,
+    enabled: showSuggestions && !softwareId,
   })
 
   const save = useMutation({
