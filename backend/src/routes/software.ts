@@ -39,9 +39,14 @@ router.get('/:id/projects', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { name, vendor } = req.body
+    const { name, vendor, endOfSupport, endOfLife } = req.body
     const software = await prisma.softwareCatalog.create({
-      data: { name, vendor: vendor || null },
+      data: {
+        name,
+        vendor: vendor || null,
+        endOfSupport: endOfSupport ? new Date(endOfSupport) : null,
+        endOfLife: endOfLife ? new Date(endOfLife) : null,
+      },
     })
     res.status(201).json(software)
   } catch (err: any) {
@@ -54,10 +59,15 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const { name, vendor } = req.body
+    const { name, vendor, endOfSupport, endOfLife } = req.body
     const software = await prisma.softwareCatalog.update({
       where: { id: Number(req.params.id) },
-      data: { name, vendor: vendor || null },
+      data: {
+        name,
+        vendor: vendor || null,
+        endOfSupport: endOfSupport ? new Date(endOfSupport) : null,
+        endOfLife: endOfLife ? new Date(endOfLife) : null,
+      },
     })
     res.json(software)
   } catch {

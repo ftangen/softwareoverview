@@ -25,8 +25,8 @@ export const api = {
   getSoftware: (search?: string) =>
     request(`/software${search ? `?search=${encodeURIComponent(search)}` : ''}`),
   getSoftwareProjects: (id: number) => request(`/software/${id}/projects`),
-  createSoftware: (name: string, vendor?: string) =>
-    request('/software', { method: 'POST', body: JSON.stringify({ name, vendor }) }),
+  createSoftware: (data: { name: string; vendor?: string; endOfSupport?: string; endOfLife?: string }) =>
+    request('/software', { method: 'POST', body: JSON.stringify(data) }),
   updateSoftware: (id: number, data: object) =>
     request(`/software/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteSoftware: (id: number) => request(`/software/${id}`, { method: 'DELETE' }),

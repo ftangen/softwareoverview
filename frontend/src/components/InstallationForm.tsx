@@ -97,6 +97,8 @@ export default function InstallationForm({ projectId, installation, onClose, onS
                     onMouseDown={() => {
                       setSoftwareName(sw.name)
                       setSoftwareId(sw.id)
+                      if (sw.endOfSupport) setEndOfSupport(sw.endOfSupport.slice(0, 10))
+                      if (sw.endOfLife) setEndOfLife(sw.endOfLife.slice(0, 10))
                       setShowSuggestions(false)
                     }}
                     className="w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-700 transition-colors flex items-center justify-between"

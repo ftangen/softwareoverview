@@ -11,6 +11,8 @@ model SoftwareCatalog {
   id            Int            @id @default(autoincrement())
   name          String         @unique
   vendor        String?
+  endOfSupport  DateTime?
+  endOfLife     DateTime?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   installations Installation[]
